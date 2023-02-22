@@ -44,6 +44,7 @@
 		var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
 		xhr.open('GET', proxyUrl + url );
 		xhr.onload = function(){
+			[Debugger]
 			if (xhr.status === 200){
 				var responseText = xhr.responseText;
 				var data = JSON.parse(responseText);
