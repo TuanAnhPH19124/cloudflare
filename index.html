@@ -46,7 +46,7 @@
 				var responseText = xhr.responseText;
 				var data = JSON.parse(responseText);
 				var table = document.getElementById('myTable');
-				for (int i = 0; i < data.length; i++){
+				for (var i = 0; i < data.length; i++){
 					var row = table.insertRow(i + 1);
 					var tenspCell = table.insertCell(0);
 					var soluongCell = table.insertCell(1);
