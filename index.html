@@ -42,9 +42,9 @@
 	    	var xhr = new XMLHttpRequest();
 		var url = 'https://localhost:44308/api/sanphamchitiets';
 		var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-		xhr.open('GET', proxyUrl + url );
+		xhr.open('GET', url );
 		xhr.onload = function(){
-			[Debugger]
+	
 			if (xhr.status === 200){
 				var responseText = xhr.responseText;
 				var data = JSON.parse(responseText);
