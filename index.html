@@ -49,7 +49,7 @@
 				
 				let data = xhr.response;
 				console.log(data);
-				console.log(data.$values[i].tenSP);
+				console.log(data.$values.tenSP);
 				let table = document.getElementById('myTable');
 				for (let i = 0; i < data.length; i++){
 					let row = table.insertRow(i + 1);
