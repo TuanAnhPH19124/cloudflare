@@ -50,7 +50,7 @@
 				let data = xhr.response;
 				console.log(data);
 				let table = document.getElementById('myTable');
-				for (let i = 0; i < data.length; i++){
+				for (let i = 0; i < data.$values.length; i++){
 					console.log(data.$values[i].tensp);
 					let row = table.insertRow(i + 1);
 					let tenspCell = row.insertCell(0);
