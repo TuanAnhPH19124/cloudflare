@@ -49,16 +49,17 @@
 				
 				let data = xhr.response;
 				console.log(data);
-// 				console.log(data.$values);
 				let table = document.getElementById('myTable');
 				for (let i = 0; i < data.length; i++){
+					console.log(data.$values[i].tensp);
 					let row = table.insertRow(i + 1);
 					let tenspCell = row.insertCell(0);
-					let soluongCell = row.insertCell(1);
-					let gianhapCell = row.insertCell(2);
-					let giabanCell = row.insertCell(3);
-					let motaCell = row.insertCell(4);
 					tenspCell.innerHTML = data.$values[i].tenSP;
+// 					let soluongCell = row.insertCell(1);
+// 					let gianhapCell = row.insertCell(2);
+// 					let giabanCell = row.insertCell(3);
+// 					let motaCell = row.insertCell(4);
+				
 // 					soluongCell.innerHTML = data.$values[i].SoLuong;
 // 					gianhapCell.innerHTML = data.$values[i].GiaNhap;
 // 					giabanCell.innerHTML = data.$values[i].GianBan;
