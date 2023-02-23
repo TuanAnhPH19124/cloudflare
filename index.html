@@ -42,20 +42,20 @@
 	    	var xhr = new XMLHttpRequest();
 		var url = 'https://localhost:44308/api/sanphamchitiets/';
 		var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-		xhr.open('GET', proxyUrl + url );
-		xhr.onload = function(){
-	
+		xhr.open('GET', url, true );
+		xhr.responseType = 'json';
+		xhr.addEventListener('load', function(){
 			if (xhr.status === 200){
-				var responseText = xhr.responseText;
-				var data = JSON.parse(responseText);
-				var table = document.getElementById('myTable');
-				for (var i = 0; i < data.length; i++){
-					var row = table.insertRow(i + 1);
-					var tenspCell = table.insertCell(0);
-					var soluongCell = table.insertCell(1);
-					var gianhapCell = table.insertCell(2);
-					var giabanCell = table.insertCell(3);
-					var motaCell = table.insertCell(4);
+				
+				let data = xhr.response;
+				let table = document.getElementById('myTable');
+				for (let i = 0; i < data.length; i++){
+					let row = table.insertRow(i + 1);
+					let tenspCell = table.insertCell(0);
+					let soluongCell = table.insertCell(1);
+					let gianhapCell = table.insertCell(2);
+					let giabanCell = table.insertCell(3);
+					let motaCell = table.insertCell(4);
 					tenspCell.innerHTML = data[i].TenSP;
 					soluongCell.innerHTML = data[i].SoLuong;
 					gianhapCell.innerHTML = data[i].GiaNhap;
@@ -65,8 +65,8 @@
 			}else{
 				
 			}
-		}
-		xhr.send();
+		});
+		xhr.send();			
 	};
     const Toast = Swal.mixin({
         toast: true,
