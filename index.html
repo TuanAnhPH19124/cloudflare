@@ -52,8 +52,8 @@
 				let table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
 				for (let i = 0; i < data.$values.length; i++){
 					console.log(data.$values[i].tensp);
-					let row = table.insertRow(i + 1);
-					let tenspCell = row.insertCell(0);
+					let row = table.insertRow();
+					let tenspCell = row.insertCell();
 					tenspCell.innerHTML = data.$values[i].tenSP;
 					tenspCell.setAttribute("contenteditable", true);
 // 					let soluongCell = row.insertCell(1);
