@@ -16,31 +16,31 @@
         <thead>
             <tr>
                 <td>Tên sản phẩm</td>
-                <!--                             <td>Số lượng</td>
-                            <td>Gia nhập</td>
-                            <td>Gia bán</td>
-                            <td>Mô tả</td>                                         -->
+                <td>Số lượng</td>
+                <td>Gia nhập</td>
+                <td>Gia bán</td>
+                <td>Mô tả</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
-
-            <!--                             <tr data-id="@item.Id" >
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"></td>
-                                <td contenteditable="true"</td>
-                                <td>
-                                    <button type="button" class="btn btn-success"> Sửa </button>
-                                <a data-id="@item.Id" data-idsp="@item.Id_SP" class="update-button btn btn-danger "> Edit </a>
-                                </td>                              
-                            </tr> -->
-
         </tbody>
     </table>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+
         window.onload = function () {
             var xhr = new XMLHttpRequest();
             var url = 'https://localhost:44308/api/sanphamchitiets/';
@@ -56,66 +56,59 @@
                     for (let i = 0; i < data.$values.length; i++) {
                         console.log(data.$values[i].tensp);
                         let row = table.insertRow();
+                        row.setAttribute('data-id', data.$values[i].id);
                         let tenspCell = row.insertCell();
-                        tenspCell.innerHTML = data.$values[i].tenSP;
-                        tenspCell.setAttribute("contenteditable", true);
-                        // 					let soluongCell = row.insertCell(1);
-                        // 					let gianhapCell = row.insertCell(2);
-                        // 					let giabanCell = row.insertCell(3);
-                        // 					let motaCell = row.insertCell(4);
+                        let soluongCell = row.insertCell();
+                        let gianhapCell = row.insertCell();
+                        let giabanCell = row.insertCell();
+                        let motaCell = row.insertCell();
+                        let actionCell = row.insertCell();
+                        let link = document.createElement('a');
+                        link.setAttribute('class', 'update-button btn btn-danger ');
+                        link.setAttribute('data-id', data.$values[i].id);
+                        link.setAttribute('data-idsp', data.$values[i].id_SP);
 
-                        // 					soluongCell.innerHTML = data.$values[i].SoLuong;
-                        // 					gianhapCell.innerHTML = data.$values[i].GiaNhap;
-                        // 					giabanCell.innerHTML = data.$values[i].GianBan;
-                        // 					motaCell.innerHTML = data.$values[i].MoTa;
+                        link.textContent = 'Edit';
+                        link.addEventListener('click', function (event) {
+                            event.preventDefault();
+                            var id = link.getAttribute("data-id");
+                            var idsp = link.getAttribute("data-idsp");
+                            updateRow(id, idsp);
+                        })
+                        tenspCell.innerHTML = data.$values[i].tenSP;
+                        soluongCell.innerHTML = data.$values[i].soLuong;
+                        gianhapCell.innerHTML = data.$values[i].giaNhap;
+                        giabanCell.innerHTML = data.$values[i].gianBan;
+                        motaCell.innerHTML = data.$values[i].moTa;
+                        tenspCell.setAttribute("contenteditable", true);
+                        soluongCell.setAttribute("contenteditable", true);
+                        gianhapCell.setAttribute("contenteditable", true);
+                        giabanCell.setAttribute("contenteditable", true);
+                        motaCell.setAttribute("contenteditable", true);
+                        actionCell.appendChild(link);
                     }
                 } else {
 
                 }
             });
             xhr.send();
+
         };
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
 
-        document.addEventListener("DOMContentLoaded", function () {
-            var buttons = document.querySelectorAll(".update-button");
-            buttons.forEach(function (button) {
-                button.addEventListener("click", function (event) {
-                    event.preventDefault();
 
-                    var id = button.getAttribute("data-id");
-                    var idsp = button.getAttribute("data-idsp");
-                    updateRow(id, idsp);
-                })
-            })
-        });
         function updateRow(id, idsp) {
-
             var row = document.getElementById("myTable").querySelector("tr[data-id='" + id + "']")
             var tensp = row.querySelector("td:nth-child(1)").textContent;
             var Soluong = row.querySelector("td:nth-child(2)").textContent;
             var gianhap = row.querySelector("td:nth-child(3)").textContent;
             var giaban = row.querySelector("td:nth-child(4)").textContent;
             var mota = row.querySelector("td:nth-child(5)").textContent;
-            //var giamgia = row.querySelector("td:nth-child(6)").textContent;
-            //var trangthai = row.querySelector("td:nth-child(7)").textContent;
-
 
             var xhr = new XMLHttpRequest();
-            xhr.open("POST", "/Home/Update/" + id);
+            xhr.open("PUT", "https://localhost:44308/api/sanphamchitiets/" + id);
             xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
             xhr.onload = function () {
-                if (xhr.status === 200) {
+                if (xhr.status === 204) {
                     Toast.fire({
                         icon: 'success',
                         title: 'Cap nhat thanh cong'
@@ -127,8 +120,15 @@
                     })
                 }
             };
-            xhr.send(JSON.stringify({ Id: id, TenSP: tensp, MoTa: mota, GiaNhap: gianhap, GianBan: giaban, SoLuong: Soluong, Id_SP: idsp }));
-
+            xhr.send(JSON.stringify({
+                "id": id,
+                "tenSP": tensp,
+                "moTa": mota,
+                "giaNhap": gianhap,
+                "gianBan": giaban,
+                "soLuong": Soluong,
+                "id_SP": idsp
+            }));
         }
 
     </script
