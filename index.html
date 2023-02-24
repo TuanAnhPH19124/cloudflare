@@ -1,27 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-	<title>Cloudflare Pages Demo</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>Cloudflare Pages Demo</title>
 </head>
+
 <body>
-	<h1>This is demo site for geeksforgeeks article on cloudflare pages</h1>
-	<table id="myTable" class="table table-striped">
-                    <thead>
-                        <tr>
-                            <td>Tên sản phẩm</td>
-<!--                             <td>Số lượng</td>
+    <h1>This is demo site for geeksforgeeks article on cloudflare pages</h1>
+    <table id="myTable" class="table table-striped">
+        <thead>
+            <tr>
+                <td>Tên sản phẩm</td>
+                <!--                             <td>Số lượng</td>
                             <td>Gia nhập</td>
                             <td>Gia bán</td>
                             <td>Mô tả</td>                                         -->
-                        </tr>
-                    </thead>         
-                    <tbody>
-                       
-<!--                             <tr data-id="@item.Id" >
+            </tr>
+        </thead>
+        <tbody>
+
+            <!--                             <tr data-id="@item.Id" >
                                 <td contenteditable="true"></td>
                                 <td contenteditable="true"></td>
                                 <td contenteditable="true"></td>
@@ -32,103 +35,102 @@
                                 <a data-id="@item.Id" data-idsp="@item.Id_SP" class="update-button btn btn-danger "> Edit </a>
                                 </td>                              
                             </tr> -->
-                                   
-                    </tbody>                   
-                </table>
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-	window.onload = function(){
-	    	var xhr = new XMLHttpRequest();
-		var url = 'https://localhost:44308/api/sanphamchitiets/';
-		var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-		xhr.open('GET', url, true );
-		xhr.responseType = 'json';
-		xhr.addEventListener('load', function(){
-			if (xhr.status === 200){
-				
-				let data = xhr.response;
-				console.log(data);
-				let table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
-				for (let i = 0; i < data.$values.length; i++){
-					console.log(data.$values[i].tensp);
-					let row = table.insertRow();
-					let tenspCell = row.insertCell();
-					tenspCell.innerHTML = data.$values[i].tenSP;
-					tenspCell.setAttribute("contenteditable", true);
-// 					let soluongCell = row.insertCell(1);
-// 					let gianhapCell = row.insertCell(2);
-// 					let giabanCell = row.insertCell(3);
-// 					let motaCell = row.insertCell(4);
-				
-// 					soluongCell.innerHTML = data.$values[i].SoLuong;
-// 					gianhapCell.innerHTML = data.$values[i].GiaNhap;
-// 					giabanCell.innerHTML = data.$values[i].GianBan;
-// 					motaCell.innerHTML = data.$values[i].MoTa;
-				}
-			}else{
-				
-			}
-		});
-		xhr.send();			
-	};
-    const Toast = Swal.mixin({
-        toast: true,
-        position: 'top-end',
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-            toast.addEventListener('mouseenter', Swal.stopTimer)
-            toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-    })
 
-    document.addEventListener("DOMContentLoaded", function(){
-        var buttons = document.querySelectorAll(".update-button");
-        buttons.forEach(function(button){
-            button.addEventListener("click", function(event){
-                event.preventDefault();
+        </tbody>
+    </table>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        window.onload = function () {
+            var xhr = new XMLHttpRequest();
+            var url = 'https://localhost:44308/api/sanphamchitiets/';
+            var proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+            xhr.open('GET', url, true);
+            xhr.responseType = 'json';
+            xhr.addEventListener('load', function () {
+                if (xhr.status === 200) {
 
-                var id = button.getAttribute("data-id");
-                var idsp = button.getAttribute("data-idsp");              
-                updateRow(id, idsp);
-            })
+                    let data = xhr.response;
+                    console.log(data);
+                    let table = document.getElementById('myTable').getElementsByTagName('tbody')[0];
+                    for (let i = 0; i < data.$values.length; i++) {
+                        console.log(data.$values[i].tensp);
+                        let row = table.insertRow();
+                        let tenspCell = row.insertCell();
+                        tenspCell.innerHTML = data.$values[i].tenSP;
+                        tenspCell.setAttribute("contenteditable", true);
+                        // 					let soluongCell = row.insertCell(1);
+                        // 					let gianhapCell = row.insertCell(2);
+                        // 					let giabanCell = row.insertCell(3);
+                        // 					let motaCell = row.insertCell(4);
+
+                        // 					soluongCell.innerHTML = data.$values[i].SoLuong;
+                        // 					gianhapCell.innerHTML = data.$values[i].GiaNhap;
+                        // 					giabanCell.innerHTML = data.$values[i].GianBan;
+                        // 					motaCell.innerHTML = data.$values[i].MoTa;
+                    }
+                } else {
+
+                }
+            });
+            xhr.send();
+        };
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
         })
-    });
-    function updateRow(id, idsp){
 
-        var row = document.getElementById("myTable").querySelector("tr[data-id='" + id + "']")
-        var tensp = row.querySelector("td:nth-child(1)").textContent;
-        var Soluong = row.querySelector("td:nth-child(2)").textContent;
-        var gianhap = row.querySelector("td:nth-child(3)").textContent;
-        var giaban = row.querySelector("td:nth-child(4)").textContent;
-        var mota = row.querySelector("td:nth-child(5)").textContent;
-        //var giamgia = row.querySelector("td:nth-child(6)").textContent;
-        //var trangthai = row.querySelector("td:nth-child(7)").textContent;
-       
+        document.addEventListener("DOMContentLoaded", function () {
+            var buttons = document.querySelectorAll(".update-button");
+            buttons.forEach(function (button) {
+                button.addEventListener("click", function (event) {
+                    event.preventDefault();
 
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "/Home/Update/" + id);
-        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.onload = function(){
-            if (xhr.status === 200){
-                Toast.fire({
+                    var id = button.getAttribute("data-id");
+                    var idsp = button.getAttribute("data-idsp");
+                    updateRow(id, idsp);
+                })
+            })
+        });
+        function updateRow(id, idsp) {
+
+            var row = document.getElementById("myTable").querySelector("tr[data-id='" + id + "']")
+            var tensp = row.querySelector("td:nth-child(1)").textContent;
+            var Soluong = row.querySelector("td:nth-child(2)").textContent;
+            var gianhap = row.querySelector("td:nth-child(3)").textContent;
+            var giaban = row.querySelector("td:nth-child(4)").textContent;
+            var mota = row.querySelector("td:nth-child(5)").textContent;
+            //var giamgia = row.querySelector("td:nth-child(6)").textContent;
+            //var trangthai = row.querySelector("td:nth-child(7)").textContent;
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/Home/Update/" + id);
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    Toast.fire({
                         icon: 'success',
                         title: 'Cap nhat thanh cong'
                     })
-            }else{
-                Toast.fire({
+                } else {
+                    Toast.fire({
                         icon: 'error',
                         title: 'Cap nhat that bai'
                     })
-            }
-        };
-        xhr.send(JSON.stringify({ Id: id, TenSP: tensp, MoTa: mota, GiaNhap: gianhap, GianBan: giaban, SoLuong: Soluong, Id_SP: idsp }));
-        
-    }
-  
-</script
+                }
+            };
+            xhr.send(JSON.stringify({ Id: id, TenSP: tensp, MoTa: mota, GiaNhap: gianhap, GianBan: giaban, SoLuong: Soluong, Id_SP: idsp }));
+
+        }
+
+    </script
 </body>
 </html>
-
