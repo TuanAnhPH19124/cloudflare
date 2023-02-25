@@ -67,12 +67,12 @@
                         link.setAttribute('class', 'update-button btn btn-danger ');
                         link.setAttribute('data-id', data.$values[i].id);
                         link.setAttribute('data-idsp', data.$values[i].id_SP);
-
                         link.textContent = 'Edit';
                         link.addEventListener('click', function (event) {
                             event.preventDefault();
                             var id = link.getAttribute("data-id");
                             var idsp = link.getAttribute("data-idsp");
+                            validation();
                             updateRow(id, idsp);
                         })
                         tenspCell.innerHTML = data.$values[i].tenSP;
@@ -94,7 +94,9 @@
             xhr.send();
 
         };
+        function validation(){
 
+        }
 
         function updateRow(id, idsp) {
             var row = document.getElementById("myTable").querySelector("tr[data-id='" + id + "']")
